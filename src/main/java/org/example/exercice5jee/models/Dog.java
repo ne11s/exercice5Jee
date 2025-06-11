@@ -7,7 +7,7 @@ public class Dog {
     private String name;
     private String breed;
     private LocalDate birthday;
-    Dog(String name, String breed, LocalDate birthday) {
+    public Dog(String name, String breed, LocalDate birthday) {
         this.id = id++;
         this.name = name;
         this.breed = breed;
