@@ -8,6 +8,6 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="dogTabs">Hello Servlet</a>
+<a href="dog">tableau du chenile</a>
 </body>
 </html>

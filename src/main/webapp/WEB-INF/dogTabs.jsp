@@ -32,7 +32,9 @@
                     </tr>
                 <% } %>
             <% } else { %>
-                <th>Vous n'avez aucun chats dans votre liste !!!!</th>
+            <tr>
+                <td>Vous n'avez aucun chats dans votre liste !!!!</td>
+            </tr>
             <% } %>
             <form action="dogTabs" method="post">
                 <th><input type="text" name="name" id="name"></th>

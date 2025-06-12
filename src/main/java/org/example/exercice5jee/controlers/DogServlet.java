@@ -6,31 +6,38 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.exercice5jee.models.Dog;
+import org.example.exercice5jee.service.ChenileService;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-@WebServlet(value ="/dogTabs")
+@WebServlet(value = { "/dog/*"})
 public class DogServlet extends HttpServlet {
-    private List<Dog> dogs;
+    private ChenileService chenileService = new ChenileService();
+
     @Override
     public void init() throws ServletException {
-        dogs = new ArrayList<>();
-        dogs.add(new Dog("toto", "golden", LocalDate.now()));
+
+
     }
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("dogs", dogs);
-        req.getRequestDispatcher("/WEB-INF/dogTabs.jsp").forward(req, resp);
+
+        String pathInfo = req.getPathInfo();
+        //System.out.println(Integer.parseInt(pathInfo.substring(1)));
+        if (pathInfo == null || pathInfo.equals("/")) {
+            req.setAttribute("dogs", chenileService.getAllDogs());
+            req.getRequestDispatcher("/WEB-INF/dogTabs.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("dog", chenileService.getDog(Integer.parseInt(pathInfo.substring(1))));
+            req.getRequestDispatcher("/WEB-INF/dogForm.jsp").forward(req, resp);
+        }
+
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String breed = req.getParameter("breed");
         String birthday = req.getParameter("birthday");
         LocalDate birthdayDate = LocalDate.parse(birthday);
-        Dog dog = new Dog(name, breed, birthdayDate);
-        this.dogs.add(dog);
-
+        chenileService.creatdog(name,breed,birthdayDate);
         doGet(req,resp);
     }
 
